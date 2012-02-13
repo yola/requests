@@ -416,8 +416,13 @@ class Request(object):
                     else:
                         fn = guess_filename(v) or k
                         fp = v
-                    fields.update({k: (fn, fp.read())})
-
+                    
+                    if isinstance(fp, file):
+                        file_content = fp.read()
+                    else:
+                        file_content = fp
+                    fields.update({k: (fn, file_content)})
+                    
                 (body, content_type) = encode_multipart_formdata(fields)
             else:
                 pass
