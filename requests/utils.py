@@ -17,7 +17,7 @@ import re
 import zlib
 
 from .compat import parse_http_list as _parse_list_header
-from .compat import quote, unquote, cookielib, SimpleCookie, is_py2, is_py25
+from .compat import quote, unquote, cookielib, SimpleCookie, is_py2, is_py26_or_higher
 
 
 def dict_from_string(s):
@@ -183,10 +183,10 @@ def randombytes(n):
     else:
         L = [chr(random.randrange(0, 256)).encode('utf-8') for i in range(n)]
 
-    if is_py25:
-        return ''.join(L)
-    else:
+    if is_py26_or_higher:
         return bytes(L)
+    else:
+        return ''.join(L)
 
 
 def dict_from_cookiejar(cj):
@@ -406,6 +406,11 @@ def requote_path(path):
     This function passes the given path through an unquote/quote cycle to
     ensure that it is fully and consistently quoted.
     """
-    parts = path.split(b"/")
-    parts = (quote(unquote(part), safe=b"") for part in parts)
-    return b"/".join(parts)
+    if is_py26_or_higher:
+        parts = path.split(b"/")
+        parts = (quote(unquote(part), safe=b"") for part in parts)
+        return b"/".join(parts)
+    else:  # Prior to 2.6, bytes were treated as the str type
+        parts = path.split("/")
+        parts = (quote(unquote(part), safe="") for part in parts)
+        return "/".join(parts)

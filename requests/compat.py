@@ -41,6 +41,9 @@ is_py27 = (is_py2 and _ver[1] == 7)
 #: Python 2.6.x
 is_py26 = (is_py2 and _ver[1] == 6)
 
+#: Python 2.6.x or higher
+is_py26_or_higher = (is_py3 or (is_py2 and _ver[1] >= 6))
+
 #: Python 2.5.x
 is_py25 = (is_py2 and _ver[1] == 5)
 
