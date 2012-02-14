@@ -407,10 +407,10 @@ def requote_path(path):
     ensure that it is fully and consistently quoted.
     """
     if is_py26_or_higher:
-        parts = path.split(b"/")
-        parts = (quote(unquote(part), safe=b"") for part in parts)
-        return b"/".join(parts)
-    else:  # Prior to 2.6, bytes were treated as the str type
+        parts = path.split(bytes("/"))
+        parts = (quote(unquote(part), safe=bytes("")) for part in parts)
+        return bytes("/".join(parts))
+    else:  # Prior to 2.6, bytes were treated as the str
         parts = path.split("/")
         parts = (quote(unquote(part), safe="") for part in parts)
         return "/".join(parts)
