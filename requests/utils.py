@@ -17,7 +17,7 @@ import re
 import zlib
 
 from .compat import parse_http_list as _parse_list_header
-from .compat import quote, unquote, cookielib, SimpleCookie, is_py2
+from .compat import quote, unquote, cookielib, SimpleCookie, is_py2, is_py25
 
 
 def dict_from_string(s):
@@ -182,7 +182,11 @@ def randombytes(n):
         L = [chr(random.randrange(0, 256)) for i in range(n)]
     else:
         L = [chr(random.randrange(0, 256)).encode('utf-8') for i in range(n)]
-    return b"".join(L)
+
+    if is_py25:
+        return ''.join(L)
+    else:
+        return bytes(L)
 
 
 def dict_from_cookiejar(cj):
