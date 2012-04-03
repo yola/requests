@@ -15,7 +15,7 @@ requests
 """
 
 __title__ = 'requests'
-__version__ = '0.8.6'
+__version__ = '0.8.6.yola1'
 __build__ = 0x000806
 __author__ = 'Kenneth Reitz'
 __license__ = 'ISC'
